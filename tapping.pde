@@ -25,7 +25,7 @@ void draw()
   } else {
     if (tapped) {
       text("Tap!", 0, 0, width, height);
-      if (millis() - previousMilliseconds > 100) {
+      if (millis() - previousMilliseconds > 120) {
         tapped = false;
       }
     }
@@ -46,7 +46,7 @@ void onAccelerometerEvent(float x, float y, float z)
     }
     averageAcc = sum / previousSizes.size();
   } else {
-    if (Math.abs(size - averageAcc) > 0.1) {
+    if (Math.abs(size - averageAcc) > 2.0) {
       if (!tapped) {
         tapped = true;
         previousMilliseconds = millis();
