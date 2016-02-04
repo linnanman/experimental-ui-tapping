@@ -16,12 +16,14 @@ int tapsPerSecond = 0;
 boolean alert = false;
 
 PImage logo;
+PImage icon;
 double latestSize;
 
 void setup()
 {
   latestSize = 0;
   logo = loadImage("logo.png");
+  icon = loadImage("fingerprint.png");
   sensor = new KetaiSensor(this);
   sensor.setDelayInterval(10);
   sensor.start();
@@ -36,9 +38,9 @@ void draw()
 {
   background(0, 0, 0);
   fill(255, 255, 255);
-  ellipse(width / 2, 3 * height / 4, (int)(100 + 100 * latestSize), (int)(100 + 100 * latestSize));
-  
   imageMode(CENTER);
+  image(icon, width / 2, 3 * height / 4, (int)(100 + 100 * latestSize), (int)(100 + 100 * latestSize));
+
   image(logo, width / 2, height / 4);
   if (alert == true) {
     // Tempo limit achieved, alert!
