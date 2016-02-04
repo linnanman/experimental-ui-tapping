@@ -1,4 +1,9 @@
-import ketai.sensors.*; //
+import ketai.sensors.*;
+import android.content.Context;
+import android.content.res.AssetFileDescriptor;
+import android.media.MediaPlayer;
+
+Context context;
 
 int ALERT_LIMIT = 4;
 int DAMPENING_MILLISECONDS = 120;
@@ -19,8 +24,20 @@ PImage logo;
 PImage icon;
 double latestSize;
 
+MediaPlayer sound;
+
 void setup()
 {
+  context = this.getActivity().getApplicationContext();
+  sound = new MediaPlayer();
+  try {
+    AssetFileDescriptor afd = context.getAssets().openFd("trainhorn.wav");
+    sound.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+    sound.prepare();
+  } catch (IOException e) {
+    print(e.getMessage());
+  }
+
   latestSize = 0;
   logo = loadImage("logo.png");
   icon = loadImage("fingerprint.png");
@@ -44,7 +61,7 @@ void draw()
   image(logo, width / 2, height / 4);
   if (alert == true) {
     // Tempo limit achieved, alert!
-    text("Alert!", 0, 0, width, height);
+    sound.start();
     return;
   }
   if (calibrating) {
