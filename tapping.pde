@@ -16,9 +16,11 @@ int tapsPerSecond = 0;
 boolean alert = false;
 
 PImage logo;
+double latestSize;
 
 void setup()
 {
+  latestSize = 0;
   logo = loadImage("logo.png");
   sensor = new KetaiSensor(this);
   sensor.setDelayInterval(10);
@@ -33,6 +35,9 @@ void setup()
 void draw()
 {
   background(0, 0, 0);
+  fill(255, 255, 255);
+  ellipse(width / 2, 3 * height / 4, (int)(100 + 100 * latestSize), (int)(100 + 100 * latestSize));
+  
   imageMode(CENTER);
   image(logo, width / 2, height / 4);
   if (alert == true) {
@@ -88,4 +93,6 @@ void onAccelerometerEvent(float x, float y, float z)
       }
     }
   }
+  
+  latestSize = Math.abs(size - averageAcc);
 }
