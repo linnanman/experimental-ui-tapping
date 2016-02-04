@@ -15,12 +15,14 @@ boolean newSecond = false;
 int tapsPerSecond = 0;
 boolean alert = false;
 
+PImage logo;
+
 void setup()
 {
+  logo = loadImage("logo.png");
   sensor = new KetaiSensor(this);
   sensor.setDelayInterval(10);
   sensor.start();
-  orientation(LANDSCAPE);
   textAlign(CENTER, CENTER);
   textSize(36);
   
@@ -31,6 +33,8 @@ void setup()
 void draw()
 {
   background(0, 0, 0);
+  imageMode(CENTER);
+  image(logo, width / 2, height / 4);
   if (alert == true) {
     // Tempo limit achieved, alert!
     text("Alert!", 0, 0, width, height);
